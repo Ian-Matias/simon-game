@@ -15,6 +15,7 @@ var highScores = JSON.parse(localStorage.getItem("simonHighScores")) || {
 let demoMode = false;
 let demoInterval = null;
 let allowClicks = false;
+let highScoreCelebrated = false;
 
 let bgMusic = new Audio("sounds/synth.mp3");
 bgMusic.loop = true;
@@ -78,8 +79,39 @@ function updateLeaderboardUI() {
 function nextSequence() {
   userClickedPattern = [];
   level++;
+// ⭐ Live high score update (during gameplay)
+// ⭐ Live high score update (during gameplay)
+let scoreThisRound = level - 1;
 
-$("#level-title").text("Level " + level + " — ");
+if (scoreThisRound > highScores[currentDifficulty].score) {
+
+  // Update high score value
+  highScores[currentDifficulty].score = scoreThisRound;
+  highScores[currentDifficulty].name = playerName;
+  localStorage.setItem("simonHighScores", JSON.stringify(highScores));
+
+  updateHighScoreUI();
+  updateLeaderboardUI();
+
+  // ⭐ Only celebrate ONCE
+  if (!highScoreCelebrated) {
+    highScoreCelebrated = true;
+
+    // 🎉 Victory theme
+    let victory = new Audio("sounds/victory.mp3");
+    victory.volume = 0.9;
+    victory.play();
+
+    // 🌟 Neon banner
+    $("#new-high-score-banner").show();
+    setTimeout(() => {
+      $("#new-high-score-banner").fadeOut(500);
+    }, 3000);
+  }
+}
+
+
+$("#level-title").text("Level " + level +);
 
 
   var randomNumber = Math.floor(Math.random() * 4);
@@ -224,13 +256,6 @@ $("#restart-btn").on("click touchstart", function (e) {
 });
 
 
-
-
-
-
-
-
-
 function checkAnswer(currentLevel) {
 
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
@@ -270,36 +295,6 @@ $("#level-title").text("Game Over! Press Restart");
 setTimeout(function () {
   $("body").removeClass("game-over");
 }, 200);
-
-
-  // update high score
-let scoreThisRound = level - 1;
-
-if (scoreThisRound > highScores[currentDifficulty].score) {
-    highScores[currentDifficulty].score = scoreThisRound;
-    highScores[currentDifficulty].name = playerName;
-
-    localStorage.setItem("simonHighScores", JSON.stringify(highScores));
-
-    updateHighScoreUI();
-    updateLeaderboardUI();
-
-    // 🔊 High score sound
-    let hsAudio = new Audio("sounds/highscore.mp3");
-    hsAudio.volume = 0.7;
-    hsAudio.play();
-
-    // 🎉 Victory theme
-    let victory = new Audio("sounds/victory.mp3");
-    victory.volume = 0.9;
-    victory.play();
-
-    // 🌟 Neon banner
-    $("#new-high-score-banner").show();
-    setTimeout(() => {
-      $("#new-high-score-banner").fadeOut(500);
-    }, 3000);
-}
 
 
 
@@ -371,6 +366,7 @@ function startOver() {
   gamePattern = [];
   started = false;
   isAnimating = false;
-  // DO NOT reset currentDifficulty
+  highScoreCelebrated = false; // ← reset celebration
 }
+
 
