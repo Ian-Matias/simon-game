@@ -1,0 +1,504 @@
+body {
+  text-align: center;
+  background-color: #011F3F;
+  margin: 0;
+  padding: 0;
+}
+
+#level-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2.2rem;
+  margin: 40px 10px;
+  color: #FEF2BF;
+}
+
+/* Make container responsive */
+.container {
+  width: 100%;
+  max-width: 450px;
+  margin: auto;
+  padding: 10px;
+}
+
+/* Make rows flexible */
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Make buttons responsive squares */
+.btn {
+  width: 45%;
+  padding-top: 45%; /* perfect square */
+  position: relative;
+  border: 10px solid black;
+  border-radius: 20%;
+  box-sizing: border-box;
+}
+
+/* Neon glow base */
+.btn {
+  position: relative;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Neon glow colors */
+.green {
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+}
+.red {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+}
+.blue {
+  box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+}
+.yellow {
+  box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
+}
+
+/* Glow pulse when pressed */
+.pressed {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px white;
+}
+
+#high-score {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: #0ff;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #0ff;
+}
+#leaderboard {
+  margin-top: 25px;
+  padding: 15px;
+  border: 3px solid #0ff;
+  border-radius: 10px;
+  width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(0, 20, 40, 0.7);
+  box-shadow: 0 0 20px #0ff;
+}
+
+#leaderboard h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: #0ff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #0ff;
+}
+
+#leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#leaderboard-list li {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.9rem;
+  color: #FEF2BF;
+  margin: 8px 0;
+}
+
+#leaderboard-list span {
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+#player-name-box {
+  margin-top: 15px;
+}
+
+#player-name {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  padding: 10px;
+  width: 240px;
+  text-align: center;
+  border: 3px solid #0ff;
+  border-radius: 8px;
+  background-color: rgba(0, 20, 40, 0.7);
+  color: #0ff;
+  box-shadow: 0 0 15px #0ff;
+}
+
+#player-name::placeholder {
+  color: #0ff;
+  opacity: 0.6;
+}
+
+
+/* Neon pulse animation for Start button */
+#start-btn {
+  font-family: 'Press Start 2P', cursive;
+  color: #0ff;
+  border: 3px solid #0ff;
+  background-color: rgba(0, 20, 40, 0.7);
+  padding: 15px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow: 0 0 10px #0ff;
+  box-shadow: 0 0 15px #0ff;
+  animation: neonPulse 1.4s infinite ease-in-out;
+}
+
+@keyframes neonPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px #0ff;
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 25px #0ff;
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px #0ff;
+    opacity: 0.7;
+  }
+}
+
+
+#start-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #0ff, 0 0 40px #0ff inset;
+}
+
+#start-btn:active {
+  transform: scale(0.95);
+}
+
+#restart-btn {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  padding: 15px 25px;
+  margin-top: 20px;
+  background-color: #ff00ff;
+  color: #011F3F;
+  border: 4px solid #ff00ff;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff inset;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#restart-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #ff00ff, 0 0 40px #ff00ff inset;
+}
+
+#restart-btn:active {
+  transform: scale(0.95);
+}
+
+#difficulty-select {
+  margin-top: 20px;
+}
+
+
+#difficulty-select {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.difficulty-icon {
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  color: #0ff;
+}
+
+.difficulty-icon p {
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+
+/* Base icon style */
+.icon-circle,
+.icon-diamond,
+.icon-triangle,
+.icon-star {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #0ff;
+  box-shadow: 0 0 10px #0ff;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Shapes */
+.icon-circle {
+  border-radius: 50%;
+}
+
+.icon-diamond {
+  transform: rotate(45deg);
+}
+
+.icon-triangle {
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-bottom: 40px solid #0ff;
+  box-shadow: none;
+}
+
+.icon-star {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 35px solid #0ff;
+  animation: pulseFast 0.8s infinite ease-in-out;
+}
+
+/* Pulse animations */
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px #0ff; }
+  50% { transform: scale(1.2); box-shadow: 0 0 25px #0ff; }
+  100% { transform: scale(1); box-shadow: 0 0 10px #0ff; }
+}
+
+@keyframes pulseFast {
+  0% { transform: scale(1); box-shadow: 0 0 15px #ff00ff; }
+  50% { transform: scale(1.3); box-shadow: 0 0 40px #ff00ff; }
+  100% { transform: scale(1); box-shadow: 0 0 15px #ff00ff; }
+}
+
+/* Active difficulty highlight */
+.difficulty-icon.active p {
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff;
+}
+
+
+#new-high-score-banner {
+  display: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+  margin-top: 20px;
+  animation: neonFlash 1s ease-in-out infinite;
+}
+
+@keyframes neonFlash {
+  0% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.2; transform: scale(0.9); }
+}
+
+
+/* Color fill */
+.green { background-color: green; }
+.red { background-color: red; }
+.blue { background-color: blue; }
+.yellow { background-color: yellow; }
+
+/* Press animation */
+.pressed {
+  box-shadow: 0 0 20px white;
+  background-color: grey;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20%;
+  box-shadow: 0 0 25px currentColor;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn.pressed::after {
+  opacity: 1;
+}
+
+
+/* Game over flash */
+.game-over {
+  background-color: rgba(255, 0, 0, 0.4);
+  box-shadow: inset 0 0 50px red;
+}
+
+.error {
+  animation: neonError 0.3s;
+}
+
+@keyframes neonError {
+  0% { box-shadow: 0 0 10px red; }
+  50% { box-shadow: 0 0 25px red; }
+  100% { box-shadow: 0 0 10px red; }
+}
+
+/* Animated neon grid background */
+body {
+  background-color: #011F3F;
+background-image:
+  linear-gradient(90deg, rgba(0,255,255,0.25) 1px, transparent 1px),
+  linear-gradient(rgba(0,255,255,0.25) 1px, transparent 1px);
+background-size: 40px 40px;
+ animation: gridMove 3s linear infinite;
+
+}
+
+/* Grid animation */
+@keyframes gridMove {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 40px 40px, 40px 40px;
+  }
+}
+
+/* Neon animated border around the whole game */
+#game-container {
+  padding: 25px;
+  border: 4px solid #0ff;
+  border-radius: 20px;
+  box-shadow:
+    0 0 20px #0ff,
+    0 0 40px #0ff,
+    inset 0 0 20px #0ff;
+  animation: neonBorderPulse 2.5s infinite ease-in-out;
+  width: fit-content;
+  margin: 30px auto;
+  background-color: rgba(0, 20, 40, 0.6);
+}
+
+/* Border pulse animation */
+@keyframes neonBorderPulse {
+  0% {
+    box-shadow:
+      0 0 15px #0ff,
+      0 0 30px #0ff,
+      inset 0 0 10px #0ff;
+    border-color: #0ff;
+  }
+  50% {
+    box-shadow:
+      0 0 35px #0ff,
+      0 0 70px #0ff,
+      inset 0 0 25px #0ff;
+    border-color: #00ffff;
+  }
+  100% {
+    box-shadow:
+      0 0 15px #0ff,
+      0 0 30px #0ff,
+      inset 0 0 10px #0ff;
+    border-color: #0ff;
+  }
+}
+
+#reset-highscores-btn {
+  font-family: 'Press Start 2P', cursive;
+  color: #0ff;
+  border: 3px solid #0ff;
+  background-color: rgba(0, 20, 40, 0.7);
+  padding: 15px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow: 0 0 10px #0ff;
+  box-shadow: 0 0 15px #0ff;
+  margin-top: 20px;
+  display: inline-block;
+  transition: 0.2s ease;
+}
+
+/* Optional hover effect (no flashing) */
+#reset-highscores-btn:hover {
+  box-shadow: 0 0 25px #0ff;
+  transform: scale(1.05);
+}
+
+/* Base neon style (same as Start button, no animation) */
+#reset-highscores-btn {
+  font-family: 'Press Start 2P', cursive;
+  color: #0ff;
+  border: 3px solid #0ff;
+  background-color: rgba(0, 20, 40, 0.7);
+  padding: 15px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow: 0 0 10px #0ff;
+  box-shadow: 0 0 15px #0ff;
+  margin-top: 20px;
+  display: inline-block;
+  transition: 0.25s ease;
+}
+
+/* 🔥 Neon danger glow on hover */
+#reset-highscores-btn:hover {
+  color: #ff0033;
+  border-color: #ff0033;
+  text-shadow: 0 0 15px #ff0033;
+  box-shadow:
+    0 0 25px #ff0033,
+    0 0 45px #ff0033,
+    inset 0 0 20px #ff0033;
+  transform: scale(1.08);
+}
+
+#secret-reset-box {
+  display: none;
+  margin-top: 20px;
+  text-align: center;
+}
+
+#secret-code {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  padding: 10px;
+  width: 120px;
+  text-align: center;
+  border: 3px solid #ff00ff;
+  border-radius: 10px;
+  background-color: rgba(40, 0, 40, 0.7);
+  color: #ff00ff;
+  box-shadow: 0 0 15px #ff00ff;
+}
+
+#secret-code.error {
+  animation: shake 0.3s;
+  border-color: red;
+  box-shadow: 0 0 15px red;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  #level-title {
+    font-size: 1.6rem;
+    margin-top: 25px;
+  }
+
+  .row {
+    gap: 15px;
+  }
+
+  .btn {
+    border-width: 6px;
+    border-radius: 15%;
+  }
+}

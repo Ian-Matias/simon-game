@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Simon</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+
+<div id="game-container">
+  <!-- your entire game goes here -->
+  <div class="row">
+    <div class="btn green" id="green"></div>
+    <div class="btn red" id="red"></div>
+  </div>
+  <div class="row">
+    <div class="btn yellow" id="yellow"></div>
+    <div class="btn blue" id="blue"></div>
+  </div>
+  <!-- Start, Restart, Leaderboard, Name input, etc -->
+
+  <h1 id="level-title">Press Start to Begin</h1>
+  <div id="new-high-score-banner">NEW HIGH SCORE!</div>
+<h2 id="high-score">High Score: 0</h2>
+
+<div id="player-name-box">
+  <input id="player-name" type="text" placeholder="Enter your name">
+</div>
+<br />
+<button id="start-btn">Start Game</button>
+
+<div id="difficulty-select">
+  <div class="difficulty-icon" data-speed="900" data-mode="easy">
+    <span class="icon-circle"></span>
+    <p>Easy</p>
+  </div>
+
+  <div class="difficulty-icon" data-speed="600" data-mode="normal">
+    <span class="icon-diamond"></span>
+    <p>Normal</p>
+  </div>
+
+  <div class="difficulty-icon" data-speed="350" data-mode="hard">
+    <span class="icon-triangle"></span>
+    <p>Hard</p>
+  </div>
+
+  <div class="difficulty-icon" data-speed="200" data-mode="insane">
+    <span class="icon-star"></span>
+    <p>Insane</p>
+  </div>
+</div>
+
+
+<div id="leaderboard">
+  <h2>Leaderboard</h2>
+  <ul id="leaderboard-list">
+    <li>Easy: <span id="lb-easy">0</span></li>
+    <li>Normal: <span id="lb-normal">0</span></li>
+    <li>Hard: <span id="lb-hard">0</span></li>
+    <li>Insane: <span id="lb-insane">0</span></li>
+  </ul>
+</div>
+
+
+<button id="restart-btn" style="display:none;">Restart</button>
+</div>
+
+<div id="secret-reset-box">
+  <input id="secret-code" type="password" maxlength="4" placeholder="••••">
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="game.js"></script>
+</body>
+
+</html>
