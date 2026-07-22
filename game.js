@@ -22,9 +22,13 @@ updateHighScoreUI();
 updateLeaderboardUI();
 const SECRET_CODE = "1234"; // change to whatever you want
 
+window.addEventListener("load", function () {
+  demoMode = true;
+  startDemoMode();
+});
+
 
 function startDemoMode() {
-  // Prevent duplicates
   clearInterval(demoInterval);
 
   demoInterval = setInterval(() => {
@@ -42,10 +46,8 @@ function startDemoMode() {
   }, 700);
 }
 
-window.onload = function () {
-  demoMode = true;
-  startDemoMode();
-};
+
+
 
 
 
