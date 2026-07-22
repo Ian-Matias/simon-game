@@ -188,6 +188,9 @@ body {
   cursor: pointer;
   box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff inset;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  z-index: 10;
+
 }
 
 #restart-btn:hover {
@@ -209,6 +212,9 @@ body {
   justify-content: center;
   gap: 25px;
   margin-top: 20px;
+  position: relative;
+  overflow: visible;
+  z-index: 1;
 }
 
 .difficulty-icon {
@@ -223,19 +229,6 @@ body {
   font-size: 0.8rem;
 }
 
-
-
-.difficulty-icon[data-mode="speedramp"] {
-  border: 2px solid #00eaff;
-  color: #00eaff;
-  animation: pulseRamp 1.2s infinite ease-in-out;
-  width: 135px;
-  height: 32px;
-  font-size: 0.8rem;
-  padding: 4px;
-  line-height: 32px;
-  box-shadow: 0 0 15px #ff00ff, inset 0 0 10px #ff00ff;
-}
 
 @keyframes pulseRamp {
   0% { box-shadow: 0 0 5px #00eaff; }

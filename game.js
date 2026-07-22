@@ -78,13 +78,8 @@ function updateLeaderboardUI() {
 function nextSequence() {
   userClickedPattern = [];
   level++;
-  // Speed‑Ramp mode: reduce speed each level
-if (currentDifficulty === "speedramp") {
-  // Reduce speed by 25ms per level
-  difficultySpeed = Math.max(150, difficultySpeed - 25);
-}
 
-$("#level-title").text("Level " + level + " — " + difficultySpeed + "ms");
+$("#level-title").text("Level " + level + " — ");
 
 
   var randomNumber = Math.floor(Math.random() * 4);
