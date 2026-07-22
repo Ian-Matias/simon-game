@@ -14,6 +14,8 @@ var highScores = JSON.parse(localStorage.getItem("simonHighScores")) || {
 };
 let demoMode = false;
 let demoInterval = null;
+let allowClicks = false;
+
 
 var currentDifficulty = "normal"; // default
 updateHighScoreUI();
@@ -109,8 +111,6 @@ const interval = setInterval(() => {
 $("#start-btn").on("click touchstart", function (e) {
   e.preventDefault();
   e.stopImmediatePropagation();
-demoMode = false;
-clearInterval(demoInterval);
 
   playerName = $("#player-name").val().trim();
 
@@ -127,6 +127,8 @@ clearInterval(demoInterval);
   demoMode = false;
   clearInterval(demoInterval);
 
+  allowClicks = true;   // ← ENABLE Simon button input
+
   $("#start-btn").removeClass("flicker").hide();
   $("#player-name-box").hide();
   $("#difficulty-select").hide();
@@ -139,12 +141,6 @@ clearInterval(demoInterval);
   nextSequence();
   started = true;
 });
-
-
-
-
-
-
 
 
 
@@ -170,6 +166,7 @@ $(".difficulty-icon").on("click touchstart", function (e) {
 
 
 $(".btn").on("touchstart click", function (e) {
+  if (!allowClicks) return;
   e.preventDefault();
   e.stopImmediatePropagation();
 
@@ -197,20 +194,21 @@ $("#restart-btn").on("click touchstart", function (e) {
 
   startOver();
 
-  // HOME PAGE UI
+  allowClicks = false;   // ← DISABLE Simon button input
+
   $("#start-btn").show().addClass("flicker");
   $("#player-name-box").show();
-  $("#difficulty-select").show();   // ← REQUIRED for home page
+  $("#difficulty-select").show();
   $("#leaderboard").show();
   $("#restart-btn").hide();
   $("#reset-highscores-btn").hide();
 
   $("#level-title").text("Press Start to Begin");
 
-  // Start demo mode
   demoMode = true;
   startDemoMode();
 });
+
 
 
 
