@@ -60,9 +60,10 @@ body {
 
 /* Glow pulse when pressed */
 .pressed {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px white;
+  opacity: 0.5;
+  box-shadow: 0 0 20px white;
 }
+
 
 #high-score {
   font-family: 'Press Start 2P', cursive;

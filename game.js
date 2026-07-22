@@ -12,11 +12,38 @@ var highScores = JSON.parse(localStorage.getItem("simonHighScores")) || {
   hard: { score: 0, name: "—" },
   insane: { score: 0, name: "—" }
 };
+let demoMode = false;
+let demoInterval = null;
 
 var currentDifficulty = "normal"; // default
 updateHighScoreUI();
 updateLeaderboardUI();
 const SECRET_CODE = "1234"; // change to whatever you want
+
+
+function startDemoMode() {
+  // Prevent duplicates
+  clearInterval(demoInterval);
+
+  demoInterval = setInterval(() => {
+    if (!demoMode) return;
+
+    let colors = ["green", "red", "yellow", "blue"];
+    let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    $("#" + randomColor).addClass("pressed");
+
+    setTimeout(() => {
+      $("#" + randomColor).removeClass("pressed");
+    }, 300);
+
+  }, 700);
+}
+
+window.onload = function () {
+  demoMode = true;
+  startDemoMode();
+};
 
 
 
@@ -75,83 +102,45 @@ const interval = setInterval(() => {
 
 }
 
-// Konami code sequence
-const konamiCode = [
-  "ArrowUp", "ArrowUDown",
-  "ArrowLeft", "ArrowRight",
-];
 
-let konamiIndex = 0;
 
-// Listen for key presses
-document.addEventListener("keydown", function (e) {
-  if (e.key === konamiCode[konamiIndex]) {
-    konamiIndex++;
-
-    // Completed!
-    if (konamiIndex === konamiCode.length) {
-      unlockResetFeature();
-      konamiIndex = 0;
-    }
-  } else {
-    konamiIndex = 0; // reset if wrong key
-  }
-});
-
-function unlockResetFeature() {
-  $("#reset-highscores-btn").show();
-
-  // Neon unlock flash
-  $("#reset-highscores-btn").css({
-    borderColor: "#ff00ff",
-    boxShadow: "0 0 25px #ff00ff, 0 0 45px #ff00ff"
-  });
-
-  setTimeout(() => {
-    $("#reset-highscores-btn").css({
-      borderColor: "#0ff",
-      boxShadow: "0 0 15px #0ff"
-    });
-  }, 1200);
-}
 
 
 $("#start-btn").on("click touchstart", function (e) {
   e.preventDefault();
   e.stopImmediatePropagation();
+demoMode = false;
+clearInterval(demoInterval);
 
-  // Get player name
   playerName = $("#player-name").val().trim();
 
-  // FIRST: Validate player name
   if (!playerName) {
     $("#level-title").text("Enter your player name");
-    $("#player-name").addClass("error");
-    setTimeout(() => $("#player-name").removeClass("error"), 500);
     return;
   }
 
-  // SECOND: Validate difficulty mode
   if (!currentDifficulty) {
     $("#level-title").text("Choose a difficulty mode");
-    $(".difficulty-icon").addClass("error");
-    setTimeout(() => $(".difficulty-icon").removeClass("error"), 500);
     return;
   }
 
-  // If both are valid → start game
+  demoMode = false;
+  clearInterval(demoInterval);
+
   $("#start-btn").removeClass("flicker").hide();
-  $("#leaderboard").hide();
+  $("#player-name-box").hide();
   $("#difficulty-select").hide();
-$("#reset-highscores-btn").hide();
-
-
+  $("#leaderboard").hide();
+  $("#restart-btn").hide();
+  $("#reset-highscores-btn").hide();
 
   $("#level-title").text("Level " + level);
 
   nextSequence();
   started = true;
 });
+
+
 
 
 
@@ -208,16 +197,23 @@ $("#restart-btn").on("click touchstart", function (e) {
 
   startOver();
 
+  // HOME PAGE UI
   $("#start-btn").show().addClass("flicker");
   $("#player-name-box").show();
-  $("#leaderboard").hide();
-  $("#difficulty-select").hide(); // stays hidden until Start validates
-$("#reset-highscores-btn").hide();
+  $("#difficulty-select").show();   // ← REQUIRED for home page
+  $("#leaderboard").show();
+  $("#restart-btn").hide();
+  $("#reset-highscores-btn").hide();
 
+  $("#level-title").text("Press Start to Begin");
 
-  updateHighScoreUI();
-  updateLeaderboardUI();
+  // Start demo mode
+  demoMode = true;
+  startDemoMode();
 });
+
+
+
 
 
 
