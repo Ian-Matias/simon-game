@@ -34,19 +34,13 @@
 </div>
 <br />
 <button id="start-btn">Start Game</button>
-
 <div id="difficulty-select">
-  <div class="difficulty-icon" data-speed="900" data-mode="easy">
-    <span class="icon-circle"></span>
-    <p>Easy</p>
-  </div>
-
   <div class="difficulty-icon" data-speed="600" data-mode="normal">
     <span class="icon-diamond"></span>
     <p>Normal</p>
   </div>
 
-  <div class="difficulty-icon" data-speed="350" data-mode="hard">
+  <div class="difficulty-icon" data-speed="200" data-mode="hard">
     <span class="icon-triangle"></span>
     <p>Hard</p>
   </div>
@@ -55,13 +49,15 @@
     <span class="icon-star"></span>
     <p>Insane</p>
   </div>
+
+  <div class="difficulty-icon" data-mode="speedramp" data-speed="600">Speed‑Ramp⚡</div>
+
 </div>
 
 
 <div id="leaderboard">
   <h2>Leaderboard</h2>
   <ul id="leaderboard-list">
-    <li>Easy: <span id="lb-easy">0</span></li>
     <li>Normal: <span id="lb-normal">0</span></li>
     <li>Hard: <span id="lb-hard">0</span></li>
     <li>Insane: <span id="lb-insane">0</span></li>

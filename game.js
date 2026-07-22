@@ -7,14 +7,18 @@ var started = false;
 var isAnimating = false;
 var difficultySpeed = 600; // default: Normal
 var highScores = JSON.parse(localStorage.getItem("simonHighScores")) || {
-  easy: { score: 0, name: "—" },
   normal: { score: 0, name: "—" },
   hard: { score: 0, name: "—" },
   insane: { score: 0, name: "—" }
 };
+
 let demoMode = false;
 let demoInterval = null;
 let allowClicks = false;
+
+let bgMusic = new Audio("sounds/synth.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 0.3; // adjust to taste
 
 
 var currentDifficulty = "normal"; // default
@@ -25,6 +29,8 @@ const SECRET_CODE = "1234"; // change to whatever you want
 window.addEventListener("load", function () {
   demoMode = true;
   startDemoMode();
+
+  bgMusic.play();   // ← start background music
 });
 
 
@@ -60,7 +66,6 @@ function updateHighScoreUI() {
 
 
 function updateLeaderboardUI() {
-  $("#lb-easy").text(highScores.easy.score + " — " + highScores.easy.name);
   $("#lb-normal").text(highScores.normal.score + " — " + highScores.normal.name);
   $("#lb-hard").text(highScores.hard.score + " — " + highScores.hard.name);
   $("#lb-insane").text(highScores.insane.score + " — " + highScores.insane.name);
@@ -73,7 +78,14 @@ function updateLeaderboardUI() {
 function nextSequence() {
   userClickedPattern = [];
   level++;
-  $("#level-title").text("Level " + level);
+  // Speed‑Ramp mode: reduce speed each level
+if (currentDifficulty === "speedramp") {
+  // Reduce speed by 25ms per level
+  difficultySpeed = Math.max(150, difficultySpeed - 25);
+}
+
+$("#level-title").text("Level " + level + " — " + difficultySpeed + "ms");
+
 
   var randomNumber = Math.floor(Math.random() * 4);
   var randomChosenColour = buttonColours[randomNumber];
@@ -129,7 +141,10 @@ $("#start-btn").on("click touchstart", function (e) {
   demoMode = false;
   clearInterval(demoInterval);
 
-  allowClicks = true;   // ← ENABLE Simon button input
+  allowClicks = true;
+
+  bgMusic.pause();          // ← stop background music
+  bgMusic.currentTime = 0;  // ← optional reset
 
   $("#start-btn").removeClass("flicker").hide();
   $("#player-name-box").hide();
@@ -148,17 +163,17 @@ $("#start-btn").on("click touchstart", function (e) {
 
 
 
+
 $(".difficulty-icon").on("click touchstart", function (e) {
   e.preventDefault();
   e.stopImmediatePropagation();
 
   difficultySpeed = Number($(this).data("speed"));
-  currentDifficulty = $(this).data("mode");  // MUST be this
+  currentDifficulty = $(this).data("mode");
 
   $(".difficulty-icon").removeClass("active");
   $(this).addClass("active");
 
-  $("#difficulty-select").hide();
   updateHighScoreUI();
 });
 
@@ -196,7 +211,7 @@ $("#restart-btn").on("click touchstart", function (e) {
 
   startOver();
 
-  allowClicks = false;   // ← DISABLE Simon button input
+  allowClicks = false;
 
   $("#start-btn").show().addClass("flicker");
   $("#player-name-box").show();
@@ -209,7 +224,10 @@ $("#restart-btn").on("click touchstart", function (e) {
 
   demoMode = true;
   startDemoMode();
+
+  bgMusic.play();   // ← play background music on home page
 });
+
 
 
 
@@ -227,43 +245,68 @@ function checkAnswer(currentLevel) {
         }, 1000);
       }
 } else {
-  let audio = new Audio('sounds/wrong.mp3');
-  audio.play();
+let wrong = new Audio("sounds/wrong.mp3");
+wrong.volume = 0.4;
+wrong.play();
 
-  if (navigator.vibrate) {
-    navigator.vibrate([150, 100, 150]);
+let gameOverSound = new Audio("sounds/gameover.mp3");
+gameOverSound.volume = 0.8;
+gameOverSound.play();
+
+// Fade-out effect
+let fadeOut = setInterval(() => {
+  if (gameOverSound.volume > 0.05) {
+    gameOverSound.volume -= 0.05;   // decrease volume gradually
+  } else {
+    gameOverSound.volume = 0;
+    clearInterval(fadeOut);
   }
+}, 120); // fade speed (120ms per step)
 
-  $("body").addClass("game-over");
-  $("#level-title").text("Game Over! Press Restart");
 
-  setTimeout(function () {
-    $("body").removeClass("game-over");
-  }, 200);
+
+if (navigator.vibrate) {
+  navigator.vibrate([150, 100, 150]);
+}
+
+$("body").addClass("game-over");
+$("#level-title").text("Game Over! Press Restart");
+
+setTimeout(function () {
+  $("body").removeClass("game-over");
+}, 200);
+
 
   // update high score
 let scoreThisRound = level - 1;
 
 if (scoreThisRound > highScores[currentDifficulty].score) {
-  highScores[currentDifficulty].score = scoreThisRound;
-  highScores[currentDifficulty].name = playerName;
+    highScores[currentDifficulty].score = scoreThisRound;
+    highScores[currentDifficulty].name = playerName;
 
-  localStorage.setItem("simonHighScores", JSON.stringify(highScores));
+    localStorage.setItem("simonHighScores", JSON.stringify(highScores));
 
-  updateHighScoreUI();
-  updateLeaderboardUI();
+    updateHighScoreUI();
+    updateLeaderboardUI();
 
-  // 🔊 Play high score sound
-  let hsAudio = new Audio("sounds/highscore.mp3");
-  hsAudio.volume = 0.7; // optional
-  hsAudio.play();
+    // 🔊 High score sound
+    let hsAudio = new Audio("sounds/highscore.mp3");
+    hsAudio.volume = 0.7;
+    hsAudio.play();
 
-  // 🌟 Show neon banner
-  $("#new-high-score-banner").show();
-  setTimeout(() => {
-    $("#new-high-score-banner").fadeOut(500);
-  }, 3000);
+    // 🎉 Victory theme
+    let victory = new Audio("sounds/victory.mp3");
+    victory.volume = 0.9;
+    victory.play();
+
+    // 🌟 Neon banner
+    $("#new-high-score-banner").show();
+    setTimeout(() => {
+      $("#new-high-score-banner").fadeOut(500);
+    }, 3000);
 }
+
+
 
 // show leaderboard on game over
 $("#leaderboard").show();
