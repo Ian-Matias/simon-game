@@ -111,7 +111,7 @@ if (scoreThisRound > highScores[currentDifficulty].score) {
 }
 
 
-$("#level-title").text("Level " + level +);
+$("#level-title").text("Level " + level);
 
 
   var randomNumber = Math.floor(Math.random() * 4);
