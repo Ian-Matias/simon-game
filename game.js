@@ -31,8 +31,14 @@ window.addEventListener("load", function () {
   demoMode = true;
   startDemoMode();
 
-  bgMusic.play();   // ← start background music
+ bgMusic.play();   // ← start background music
 });
+
+document.addEventListener("click", function playBGOnce() {
+  bgMusic.play().catch(() => {});
+  document.removeEventListener("click", playBGOnce);
+});
+
 
 
 function startDemoMode() {
@@ -170,8 +176,8 @@ $("#start-btn").on("click touchstart", function (e) {
 
   allowClicks = true;
 
-  bgMusic.pause();          // ← stop background music
-  bgMusic.currentTime = 0;  // ← optional reset
+  bgMusic.volume = 0.15; // lower volume during gameplay
+
 
   $("#start-btn").removeClass("flicker").hide();
   $("#player-name-box").hide();
@@ -253,6 +259,8 @@ $("#restart-btn").on("click touchstart", function (e) {
   startDemoMode();
 
   bgMusic.play();   // ← play background music on home page
+  bgMusic.volume = 0.4;
+
 });
 
 
