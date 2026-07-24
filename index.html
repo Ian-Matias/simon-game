@@ -8,13 +8,9 @@
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
 
-<body>
-
-
-
-
 <div id="game-container">
   <!-- your entire game goes here -->
+  <div id="board-wrapper">
   <div class="row">
     <div class="btn green" id="green"></div>
     <div class="btn red" id="red"></div>
@@ -23,6 +19,8 @@
     <div class="btn yellow" id="yellow"></div>
     <div class="btn blue" id="blue"></div>
   </div>
+</div>
+
   <!-- Start, Restart, Leaderboard, Name input, etc -->
 
   <h1 id="level-title">Press Start to Begin</h1>
@@ -68,13 +66,9 @@
 <button id="initial-btn" style="display:none;">Home</button>
 
 
-<div id="secret-reset-box">
-  <input id="secret-code" type="password" maxlength="4" placeholder="••••">
-</div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script 
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+</script>
 <script src="game.js"></script>
-</body>
 
 </html>

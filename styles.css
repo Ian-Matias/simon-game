@@ -16,6 +16,15 @@ html, body {
   box-sizing: border-box;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;        /* prevents scroll */
+  background-color: #011F3F;
+}
+
 /* Animated neon grid */
 @keyframes gridMove {
   from { background-position: 0 0, 0 0; }
@@ -52,6 +61,16 @@ html, body {
   box-sizing: border-box;
 }
 
+#game-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
 /* Border pulse */
 @keyframes neonBorderPulse {
   0% {
@@ -75,6 +94,13 @@ html, body {
   margin: 30px 10px;
   text-align: center;
 }
+
+#level-title,
+#high-score {
+  margin: 0;
+  padding: 0;
+}
+
 
 #high-score {
   font-family: 'Press Start 2P', cursive;
@@ -395,4 +421,24 @@ html, body {
   100% {
     filter: brightness(1);
   }
+}
+
+
+#initial-btn,
+#secret-reset-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: none; /* until needed */
+}
+
+#game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  width: 40vh;
+  height: 40vh;
 }
